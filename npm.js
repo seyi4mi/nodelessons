@@ -1,9 +1,24 @@
-//REDIRECT - USED WHEN YOU'VE UPDATED/ CHANGED A FORMER URL NAME
+//THIRD PARTY PACKAGES (LODASH)
 const fs = require("fs");
 const http = require("http");
+const _ = require("lodash");
 
 const server = http.createServer((req, res) => {
-    console.log(req.url, req.method);
+    //--------------------------------------------------------//
+    //lodash
+    const num = _.random(0, 20);
+    console.log(num);
+
+    const greet = _.once(() => {
+        console.log("hello");
+    });
+
+    greet();
+    greet();
+    //--------------------------------------------------------//
+    //TO PUSH IN GITUP I HAVE DELETED THE NODE MODULES FOLDER
+    // INSTALL IT AGAIN BY TYPING NPM INSTALL IN THE TERMINAL 
+
 
     // set header content type
     res.setHeader("Content-Type", "text/html");
@@ -19,9 +34,9 @@ const server = http.createServer((req, res) => {
             path += "about.html";
             res.statusCode = 200;
             break;
-        case '/about-us': // Over the about-me page has be moved to about 
-            res.statusCode = 301; // shows it had be permanently moved
-            //to actually redirect we use the setHeader with 2 agrument a) location b)the new url
+        case '/about-us':
+            res.statusCode = 301;
+
             res.setHeader("Location", '/about');
             res.end();
             break;
@@ -29,8 +44,7 @@ const server = http.createServer((req, res) => {
             path += '404.html';
             res.statusCode = 404;
             break;
-    } //CHECK NETWORK TO VIEW THIS
-
+    }
     //send an html file
     fs.readFile(path, (err, data) => {
         if (err) {
