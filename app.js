@@ -23,3 +23,17 @@ app.get("/about", (req, res) => {
 
     res.sendFile("./views/about.html", { root: __dirname });
 });
+
+
+//Redirects
+app.get("/about-us", (req, res) => {
+    res.redirect("/about"); //this automatically sets the satus code for us
+})
+
+//404 page
+app.use((resq, res) => {
+    res.status(404).sendFile("./views/404.html", { root: __dirname }); //we have to manually add the status here
+    // d use function will fire 4 every request coming that why it doesn't hv a specific url/path
+    //until it request with a doesn't macth any path above then it fires
+    //ths must be at the bottom
+})
