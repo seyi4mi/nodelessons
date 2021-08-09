@@ -4,18 +4,22 @@
 //-authentication check middleware for protected routes
 //Middleware to parse JSON data from requests
 
-const express = require("express");
+const express = require('express');
 //3rd party middleware
 const morgan = require("morgan"); //we require morgan
 
 //express apps
 const app = express();
 
+//listen 4 requests
+app.listen(3000);
+
 //register view engine
 app.set("view engine", "ejs")
 
-//listen 4 requests
-app.listen(3000);
+//middleware & static files (css,img etc)
+app.use(express.static('public')); //this means every file in the public folder will be available as a static file to the 
+//front end
 
 app.use(morgan("dev")); //involking morgan, dev will dispaly how it wold be formatted into d console
 
