@@ -5,6 +5,8 @@
 //Middleware to parse JSON data from requests
 
 const express = require("express");
+//3rd party middleware
+const morgan = require("morgan"); //we require morgan
 
 //express apps
 const app = express();
@@ -15,20 +17,23 @@ app.set("view engine", "ejs")
 //listen 4 requests
 app.listen(3000);
 
+app.use(morgan("dev")); //involking morgan, dev will dispaly how it wold be formatted into d console
+
 //Creating Middleleware
-app.use((req, res, next) => { //add next to the parameter so we can have access to it's function
-    console.log('new request made:');
-    console.log('host: ', req.hostname); //outputting the localhost, using a property on the req obj
-    console.log('path: ', req.path); // outputting the path, using a property on the req obj
-    console.log('method: ', req.method); // outputting the method, using a property on the req obj
-    next(); // this tells express to move from the middleware to the next
-});
+// app.use((req, res, next) => { //add next to the parameter so we can have access to it's function
+//     console.log('new request made:');
+//     console.log('host: ', req.hostname); //outputting the localhost, using a property on the req obj
+//     console.log('path: ', req.path); // outputting the path, using a property on the req obj
+//     console.log('method: ', req.method); // outputting the method, using a property on the req obj
+//     next(); // this tells express to move from the middleware to the next
+// });
 
 //Another middleware
-app.use((req, res, next) => {
-    console.log('in the next middleware:');
-    next();
-});
+// app.use((req, res, next) => {
+//     console.log('in the next middleware:');
+
+//     next();
+// });
 
 
 app.get("/", (req, res) => {
