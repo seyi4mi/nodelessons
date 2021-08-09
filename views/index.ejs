@@ -1,51 +1,37 @@
 <html lang="en">
+<%- include ("./partials/head.ejs")%>
 
-<head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Blogs |
-        <%=title%>
-    </title>
-    <!-- to assess the property we'll use d pipe sym (|)
-        the angle brackets and percentage r used to 'Output a variable' -->
-</head>
+    <body>
 
-<body>
-    <nav>
-        <div class="site-title">
-            <a href="/">
-                <h1>Blog Crew</h1>
-            </a>
-            <p>A Blog Crew Site</p>
-        </div>
-        <ul>
-            <li><a href="/">Blogs</a></li>
-            <li><a href="/about">About</a></li>
-            <li><a href="/blogs/create">New Blog</a></li>
-        </ul>
-    </nav>
+        <!-- To Include The Nav File -->
+        <!-- an hypen is used becoz the = escapes special characters, and gives us a string instead of html -->
+        <!-- so whenever ever we use include we use hypen to output the value -->
+        <%- include ("./partials/nav.ejs")%>
 
-    <div class="blogs content">
-        <h2>All Blogs</h2>
-        <!-- SERVER- SIDE RENDERING -->
-        <!-- an if statement to check if the blogs in array isnt empty (>0 to check ) -->
-        <!-- if the length is >0 the we cycle thru the blogs and then fire a callback function for each blog at a time -->
 
-        <% if (blogs.length>0){ %>
-            <% blogs.forEach(blog=> { %>
+            <div class="blogs content">
+                <h2>All Blogs</h2>
+                <!-- SERVER- SIDE RENDERING -->
+                <!-- an if statement to check if the blogs in array isnt empty (>0 to check ) -->
+                <!-- if the length is >0 the we cycle thru the blogs and then fire a callback function for each blog at a time -->
 
-                <h3 class="title">
-                    <%= blog.title%>
-                </h3>
-                <p class="snippet">
-                    <%= blog.snippet%>
-                </p>
+                <% if (blogs.length>0){ %>
+                    <% blogs.forEach(blog=> { %>
 
-                <% }) %>
-                    <% } else { %>
-                        <p>There are noblogs to display...</p>
-                        <%} %>
-    </div>
-</body>
+                        <h3 class="title">
+                            <%= blog.title%>
+                        </h3>
+                        <p class="snippet">
+                            <%= blog.snippet%>
+                        </p>
+
+                        <% }) %>
+                            <% } else { %>
+                                <p>There are noblogs to display...</p>
+                                <%} %>
+            </div>
+
+            <%- include ("./partials/footer.ejs")%>
+    </body>
 
 </html>
