@@ -68,10 +68,11 @@ app.post('/blogs', (req, res) => {
         });
 });
 app.get('/blogs/:id', (req, res) => {
-    const id = req.params.id;
-    Blog.findById(id)
+    const id = req.params.id; //to find the single doc id in a database
+    Blog.findById(id) //then retive the doc with the id in d database
         .then(result => {
             res.render('details', { blog: result, title: 'Blog Details' });
+            // after we got d blog we send in the details view, then give the blog property the result and title
         })
         .catch(err => {
             console.log(err);
