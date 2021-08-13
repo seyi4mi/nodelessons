@@ -33,9 +33,9 @@ app.get("/about", (req, res) => {
 
 // blog routes
 app.get('/blogs', (req, res) => {
-    Blog.find().sort({ createdAt: -1 })
-        .then(result => {
-            res.render('index', { blogs: result, title: 'All blogs' });
+    Blog.find().sort({ createdAt: -1 }) //we get all the blogs in doc colletion and sort -1 puts them in the latest order
+        .then(result => { // once we've gotten the collection, we hv to pass it to our index view
+            res.render('index', { blogs: result, title: 'All blogs' }); // we pass in the title and the blogs array
         })
         .catch(err => {
             console.log(err);
