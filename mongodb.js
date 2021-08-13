@@ -1,45 +1,64 @@
 const express = require('express');
 const morgan = require("morgan");
 const mongoose = require("mongoose"); // require mongoose
+const Blog = require("./models/blog");
 
 //express apps
 const app = express();
-//--------------------------------------------------------------------------------------------------------------------------------------------------------//
-//MONGOOSE !!!
-//Mongoose is an ODM library - Object Document Mapping library
-//it wraps th Mongodb API nd provides us we a easier way to connect witth d database
-//it does this by allowing us to create data models tht hv db query methods to create get delete nd
-//update database documents
-
 
 //connect to mongodb
 const dbURI = "mongodb+srv://Seyifunmi:Keresimesi@nodetuts.ba9pj.mongodb.net/node-tuts?retryWrites=true&w=majority";
 mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true })
-    //we pass the const into the connect methos, then mongoode will connect to the database, the other agrument jst ignore, so u wont get warning msg
-    .then((result) => app.listen(3000)) // this will fire when the database is connected, we only listen for requected after the database is connected
-    .catch((err) => console.log(err)); //catch method to catch the error
-//its async so it will be sloowww
-//--------------------------------------------------------------------------------------------------------------------------------------------------------//
-
-//SCHEMAS & MODELS
-// schemas is d structure of a type of data/ doc - properties& property type
-//we then create a model based on the schema
-//the model allows to communicate a database collection
-// Blog schema --> Blog Model --> methods (get,save,delete.etc) --> Databade Blog Collection
-
-
-
-
-
+    .then((result) => app.listen(3000))
+    .catch((err) => console.log(err));
 
 //register view engine
 app.set("view engine", "ejs")
 
 //middleware & static files (css,img etc)
 app.use(express.static('public'));
-
 app.use(morgan("dev"));
 
+// mongoose & mongo tests
+app.get("/add-blog", (req, res) => { //.get will respont to the url request
+    const blog = new Blog({ //we create a new instance if blog document, then save it to d blog collectio in the db
+        title: "new blog", //passing object with their propeties
+        snippet: "about my new blog",
+        body: "more about my new blog"
+    })
+
+    blog.save() //we save the ne instance of the blog document
+        .then(result => {
+            res.send(result);
+        })
+        .catch(err => {
+            console.log(err);
+        });
+});
+
+//Retrieving blogs from the collection
+app.get('/all-blogs', (req, res) => {
+    Blog.find() //gets us  all the doccs in d blogs collection
+        .then(result => {
+            res.send(result);
+        })
+        .catch(err => {
+            console.log(err);
+        });
+});
+
+//finding a single blog
+app.get('/single-blog', (req, res) => {
+    Blog.findById('61117f627228bc42447cfaca')
+        .then(result => {
+            res.send(result);
+        })
+        .catch(err => {
+            console.log(err);
+        });
+});
+
+//routes
 app.get("/", (req, res) => {
     const blogs = [
         { title: 'Esther wins the Voice', snippet: 'Lorem ipsum dolor sit amet consectetur' },
