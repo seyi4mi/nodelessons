@@ -2,6 +2,7 @@ const express = require('express');
 const morgan = require("morgan");
 const mongoose = require("mongoose"); // require mongoose
 const Blog = require("./models/blog");
+const { result } = require('lodash');
 
 //express apps
 const app = express();
@@ -19,58 +20,28 @@ app.set("view engine", "ejs")
 app.use(express.static('public'));
 app.use(morgan("dev"));
 
-// mongoose & mongo tests
-app.get("/add-blog", (req, res) => { //.get will respont to the url request
-    const blog = new Blog({ //we create a new instance if blog document, then save it to d blog collectio in the db
-        title: "new blog", //passing object with their propeties
-        snippet: "about my new blog",
-        body: "more about my new blog"
-    })
 
-    blog.save() //we save the ne instance of the blog document
-        .then(result => {
-            res.send(result);
-        })
-        .catch(err => {
-            console.log(err);
-        });
-});
-
-//Retrieving blogs from the collection
-app.get('/all-blogs', (req, res) => {
-    Blog.find() //gets us  all the doccs in d blogs collection
-        .then(result => {
-            res.send(result);
-        })
-        .catch(err => {
-            console.log(err);
-        });
-});
-
-//finding a single blog
-app.get('/single-blog', (req, res) => {
-    Blog.findById('61117f627228bc42447cfaca')
-        .then(result => {
-            res.send(result);
-        })
-        .catch(err => {
-            console.log(err);
-        });
-});
 
 //routes
 app.get("/", (req, res) => {
-    const blogs = [
-        { title: 'Esther wins the Voice', snippet: 'Lorem ipsum dolor sit amet consectetur' },
-        { title: 'Kpee has a good heart', snippet: 'Lorem ipsum dolor sit amet consectetur' },
-        { title: 'Naomi still remains the queen', snippet: 'Lorem ipsum dolor sit amet consectetur' },
-    ];
-    res.render('index', { title: "Home", blogs: blogs });
+    res.redirect("/blogs"); //it still takes us to the blogs display but we're jst using redirect
 });
 
 app.get("/about", (req, res) => {
     res.render("about", { title: "About" });
 });
+
+// blog routes
+app.get('/blogs', (req, res) => {
+    Blog.find().sort({ createdAt: -1 })
+        .then(result => {
+            res.render('index', { blogs: result, title: 'All blogs' });
+        })
+        .catch(err => {
+            console.log(err);
+        });
+}); //page dat displays all d blogs
+
 
 app.get("/blogs/create", (req, res) => {
     res.render("create", { title: "Create a new Blog" });
