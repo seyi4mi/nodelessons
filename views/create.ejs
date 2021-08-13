@@ -5,7 +5,9 @@
         <%- include("./partials/nav.ejs") %>
 
             <div class="create-blog content">
-                <form>
+                <form action="/blogs" method="POST">
+                    <!-- //d action attribute is a value where we want to send our request to -->
+                    <!-- in this case its the /blogs url //second attribute is d request method, in dis case its post request -->
                     <label for="title">Blog title:</label>
                     <input type="text" id="title" name="title" required>
                     <label for="snippet">Blog snippet:</label>
@@ -13,6 +15,7 @@
                     <label for="body">Blog body:</label>
                     <textarea id="body" name="body" required></textarea>
                     <button>Submit</button>
+                    <!-- when we click on the submit its going to send the post req to the url -->
                 </form>
             </div>
 

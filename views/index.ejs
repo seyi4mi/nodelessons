@@ -15,20 +15,21 @@
                 <!-- an if statement to check if the blogs in array isnt empty (>0 to check ) -->
                 <!-- if the length is >0 the we cycle thru the blogs and then fire a callback function for each blog at a time -->
 
-                <% if (blogs.length>0){ %>
+                <% if (blogs.length> 0) { %>
                     <% blogs.forEach(blog=> { %>
-
-                        <h3 class="title">
-                            <%= blog.title%>
-                        </h3>
-                        <p class="snippet">
-                            <%= blog.snippet%>
-                        </p>
-
+                        <a class="single" href="/blogs/<%= blog._id %>">
+                            <h3 class="title">
+                                <%= blog.title %>
+                            </h3>
+                            <p class="snippet">
+                                <%= blog.snippet %>
+                            </p>
+                        </a>
                         <% }) %>
                             <% } else { %>
-                                <p>There are noblogs to display...</p>
-                                <%} %>
+                                <p>There are no blogs to display...</p>
+                                <% } %>
+
             </div>
 
             <%- include ("./partials/footer.ejs")%>
